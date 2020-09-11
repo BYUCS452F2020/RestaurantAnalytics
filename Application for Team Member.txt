@@ -1,0 +1,14 @@
+Hey Landen!
+
+I really liked your pitch today, I think that it is a great idea and would like to help out on it.
+Business
+I think what you said in your pitch was very true, a lot of small businesses would benefit from having a better form of analytics. I can see this being a great business that would help a lot of people.
+
+Legal
+I dont know much about business, but an LLC seems fine.
+
+Technical
+I have some experience with AWS (from cs260, cs240, and cs340). I know Vue.js, and some React if you are planning on doing any responsive frontend stuff. 
+I also have experience with Ruby on Rails, Flask (python based web framework), and Node.js for backend. I dont know what you were planning on using for backend, but those could be some options.
+
+Thanks for considering me - Dillon Harris Dillon.keith.harris96@gmail.com
