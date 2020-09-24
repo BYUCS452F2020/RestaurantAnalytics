@@ -1,6 +1,6 @@
 Business (BusinessID, Name, Phone, Website, Address, NumEmployees, Specialty)
  - Explanation: Centralized table of all businesses using the service. Each row represents an entire business that uses the service. Other tables link to the business through a unique ID.
-BusinessID (string): Unique identifier for the business
+BusinessID (string): Primary Key Unique identifier for the business
 Name (string): The name of the restaurant
 Phone (string): Restaurant phone number
 Website (string): Restaurant website
@@ -12,7 +12,7 @@ Specialty (string): The businesses specialty (bar, bakery, sit-down, etc.)
 Menu (MenuID, BusinessID, Name, Cost, ProductionCost, IsASpecial, IsGlutenFree, IsDairyFree, IsVegan, IsAlcoholic, Type)
  - Foreign Key: BusinessID references Business
  - Explanation: Stores and describes all menu items that the Business provides. Each row represents an item in the businesses menu. Relates to the Order table through the unique MenuID.
-MenuID (string): Unique identifier for the Menu item
+MenuID (string): Primary Key Unique identifier for the Menu item
 BusinessID (string): The business who owns the menu
 Name (string): The name of the item on the menu
 Cost (Float): The cost of the item (in US $)
@@ -27,7 +27,7 @@ Type (string): The type of item (beverage, dessert, etc)
 Employee (EmployeeID, BusinessID, EmployeeFirstName, EmployeeLastName EmployeePhone, Position)
  - Foreign Key: BusinessID references Business
  - Explanation: Stores relevant information about each employee at each business. Each row represents a person working at the business. Relates to Party table through associated EmployeeIDs.
-EmployeeID (string): Unique identifier for the employee
+EmployeeID (string): Primary Key Unique identifier for the employee
 BusinessID (string): The business that the employee works for
 EmployeeFirstName (string): The given name of the employee
 EmployeeLastName (string): The given last name of the employee	
@@ -38,7 +38,7 @@ Order (OrderID, PartyID, MenuID)
  - Foreign Key: PartyID references Party
  - Foreign Key: MenuID references Menu
  - Explanation: Connects Parties to all the menu items ordered. Each row represents a single menu item that was ordered by a Party. Connects Party Table to the Menu Table.
-OrderID (string): Unique identifier for specific customer order
+OrderID (string): Primary Key Unique identifier for specific customer order
 PartyID (string): Unique identifier for the associated Party
 MenuID (string): Unique identifier for the item ordered from Menu
 
@@ -48,7 +48,7 @@ Party (PartyID, ChefID, WaiterID, PartyName, BusinessID, TotalCost, TipAmount, T
  - Foreign Key: ChefID references Employee
  - Foreign Key: WaiterID references Employee
  - Explanation: Stores information about a group of customers. Each row represents a group of customers who made a purchase. Relates to the Menu table through the Order table.
-PartyID (string): Unique table identifier
+PartyID (string): Primary Key Unique table identifier
 ChefID (string): The employee who cooked the food for the group of customers
 WaiterID (string): The employee who waited on the group of customers
 PartyName (string): Name that host took for the party (helps with normalization)
