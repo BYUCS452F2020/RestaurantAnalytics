@@ -43,7 +43,7 @@ PartyID (string): Unique identifier for the associated Party
 MenuID (string): Unique identifier for the item ordered from Menu
 
 
-Party (PartyID, ChefID, WaiterID, PartyName, BusinessID, TotalCost, TipAmount, Time)
+Party (PartyID, ChefID, WaiterID, PartyName, BusinessID, TotalCost, TipAmount, DateTime)
  - Foreign Key: BusinessID references Business
  - Foreign Key: ChefID references Employee
  - Foreign Key: WaiterID references Employee
@@ -55,7 +55,7 @@ PartyName (string): Name that host took for the party (helps with normalization)
 BusinessID (string): The business where party dined
 TotalCost (Float): The total cost of the meal (all menu items costs combined)
 TipAmount (Float): The total amount that was received in tips
-Time (timestamp): The time that the meal was payed for
+Time (timestamp): The time and date that the meal was payed for
 
 
 Normalization: We used a unique id for each row in each table. There is little opportunity for repetition in any row, and no repetition of any column. We also minimalized opportunity for any null values.
