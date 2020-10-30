@@ -37,7 +37,6 @@
       :key="person"
     >
       <v-select
-        :key="'select-'+person"
         :items="menu"
         label="Select Items to Order"
         outlined
@@ -49,7 +48,7 @@
     </v-row>
     <v-row>
       <span>
-        Sub Total: {{getPriceSelectedItems()}}
+        Sub Total: {{'$' + getPriceSelectedItems().toFixed(2)}}
       </span>
     </v-row>
     <v-row>
@@ -61,6 +60,11 @@
       />
     </v-row>
     <v-row>
+      <span>
+        Total: {{'$' + getGrandTotal().toFixed(2)}}
+      </span>
+    </v-row>
+    <v-row>
       <v-btn
         width="100%"
         elevation="2"
@@ -70,10 +74,8 @@
         Pay
       </v-btn>
     </v-row>
-    <v-row>
-      <span>
-        Total: {{total}}
-      </span>
+    <v-row v-if="paid">
+      <span>Payment Successful!</span>
     </v-row>
   </v-container>
 </template>
@@ -121,6 +123,7 @@ export default {
       selectedItems: [],
       subTotal: 0.00,
       total: 0.00,
+      paid: false,
       partyName: "",
       tipAmounts: [
         "15%",
@@ -131,30 +134,28 @@ export default {
       numPeople: 0,
     }
   },
-  computed: {
-    getRestaurant () {
-      return "PlaceHolder Restaurant"
-    },
-    getChef () {
-      return "PlaceHolder Chef"
-    },
-    getWaiter () {
-      return "PlaceHolder Waiter"
-    },
-  },
+  
   methods: {
+    getGrandTotal () {
+      // console.log(this.getPriceSelectedItems())
+      // console.log(this.tipAmount)
+      this.total = (this.getPriceSelectedItems() + (this.getPriceSelectedItems() * this.tipAmount))
+    
+      return this.total
+    },
     setNumPeople (e) {
-      this.numPeople = [parseInt(e)]
+      this.numPeople = e
     },
     setTipAmount (e) {
       let percentage = parseInt(e, 10)/100
-      this.tipAmount = this.getSubTotal * percentage
+      this.tipAmount = percentage
     },
     submitOrder () {
       axios.post(`https://jyev82mlki.execute-api.us-west-2.amazonaws.com/devTest1/submit-order`, { party: this.getParty(), selected_items: this.getSelectedMenuItems()})
         .then(response => {
           console.log(response)
           this.total = response.data
+          this.paid = true
         })
         .catch(e => {
           console.log(e)
@@ -168,20 +169,15 @@ export default {
       return list
     },
     selectItem (e) {
-      this.selectedItems = e
-      // this.getPriceSelectedItems()
-      // console.log(this.selectedItems)
+      this.selectedItems.push(...e)
     },
     getPriceSelectedItems () {
-      let total = 0.00
+      let total = 0
       for (let i = 0; i < this.selectedItems.length; i++) {
 
         total += parseInt(this.selectedItems[i].customer_cost.toFixed(2))
       }
-      return total.toFixed(2)
-    },
-    getTotalPrice () {
-      return "$40.00"
+      return total
     },
     getParty () {
       return {
@@ -189,7 +185,7 @@ export default {
         waiter_id: this.waiter.employee_id,
         party_name: this.partyName,
         business_id: this.restaurant.business_id,
-        tip_amount: .25
+        tip_amount: this.tipAmount
       }
     }
   }
